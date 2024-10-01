@@ -10,6 +10,12 @@
         <setting type="bool" id="united_search" visible="false" default="true" />
         <setting type="text" id="us_command" visible="false" default="mode=search&keyword=" />
     </category>
+    <category label="Authorization">
+        <setting id="username" type="text" label="Username" />
+        <setting id="password" type="text" label="Password" />
+        <setting id="cookies" type="text" visible="false" label="Authorization cookies" />
+        <setting type="action" label="Authorize" action="RunScript(plugin.video.hdrezka.tv, 0, authorize)" />
+    </category>
     <category label="Proxy settings">
         <setting id="use_proxy" type="bool" label="Use proxy settings" default="false" />
         <setting id="protocol" type="labelenum" label="Protocol" values="http|https|socks5" default="http"/>
