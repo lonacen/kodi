@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 #
 # Writer (c) 2012-2021, MrStealth, dandy
-
 import os
 import re
 import sys
@@ -59,6 +58,13 @@ class HdrezkaTV:
                 'Referer': self.domain,
                 'User-Agent': USER_AGENT,
             }
+
+        saved_cookies = self.addon.getSetting('cookies')
+        if saved_cookies:
+            session.cookies = helpers.load_cookies(
+                self.addon.getSetting('cookies')
+            )
+
         return session
 
     def _load_proxy_settings(self):
@@ -577,6 +583,28 @@ class HdrezkaTV:
             item = self.url + item
         return item
 
+def authorize(plugin):
+    log('*** authorize')
 
-plugin = HdrezkaTV()
-plugin.main()
+    login_response = plugin.make_response('POST', '/ajax/login/', data={
+        'login_name': plugin.addon.getSetting('username'),
+        'login_password': plugin.addon.getSetting('password'),
+        'login_not_save': '0'
+    })
+
+    data = login_response.json()
+    if not data.get('success'):
+        raise Exception('Authorization failed status: %s text: %s' % (login_response.status_code, login_response.text))
+
+    plugin.addon.setSetting('cookies', helpers.dump_cookies(login_response.cookies))
+
+def main():
+    plugin = HdrezkaTV()
+
+    if sys.argv[2] == 'authorize':
+        authorize(plugin)
+    else:
+        plugin.main()
+
+if __name__ == '__main__':
+    main()

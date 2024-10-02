@@ -1,3 +1,6 @@
+import json
+
+from requests.cookies import cookiejar_from_dict
 import xbmc
 
 
@@ -28,6 +31,11 @@ def built_title(name, country_years, **kwargs):
     colored_info = f'[COLOR=55FFFFFF]{kwargs["age_limit"]} ({country_years})[/COLOR]'
     return f'{name} {colored_rating} {colored_info}'
 
+def dump_cookies(cookies):
+    return json.dumps(dict(cookies))
+
+def load_cookies(src):
+    return cookiejar_from_dict(json.loads(src))
 
 def log(msg, level=xbmc.LOGINFO):
     xbmc.log(f'hdrezka: {msg}', level)
