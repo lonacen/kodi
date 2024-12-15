@@ -28,7 +28,7 @@ transliterate = Translit()
 
 socket.setdefaulttimeout(120)
 
-USER_AGENT = "Mozilla/5.0 (Windows NT 6.2; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0"
+USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:133.0) Gecko/20100101 Firefox/133.0"
 
 
 class HdrezkaTV:
